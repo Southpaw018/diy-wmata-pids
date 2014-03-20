@@ -3,7 +3,7 @@ body {
     font-size: 62.5%;
     background: black;
     color: white;
-
+    padding: 25px;
 }
 
 #header {
@@ -139,3 +139,4 @@ td:last-child {
 .yl {
     color: #FDE310;
 }
+
