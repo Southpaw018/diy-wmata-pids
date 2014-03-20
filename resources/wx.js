@@ -1,17 +1,16 @@
 function getwx() {
+    var url ="http://api.openweathermap.org/data/2.5/weather?id=4370890";
 
-    var station_id = 'KDCA'
+    $.getJSON(url, function(wxData) {
+        var tempK = wxData.main.temp;
+        var tempF = (tempK - 273) * 1.8 + 32;
+        var tempStr = Math.round(tempF) + "&thinsp;&deg;F";
 
-    var query = "select temp_f, weather from xml where url='http://www.weather.gov/xml/current_obs/"+station_id+".xml'";
+        var cond = wxData.weather[0].description;
+        var condStr = cond.charAt(0).toUpperCase() + cond.slice(1);
 
-    var url = "http://query.yahooapis.com/v1/public/yql?q="+encodeURI(query)+"&format=json&callback=?";
-
-    $.getJSON(url, function(data) {
-        console.log(data);
-        $("#wx span.obs").html(data.query.results.current_observation.weather);
-        var temp_string = data.query.results.current_observation.temp_f.substring(0,2) + " ºF"
-        $("#wx span.temp").html(temp_string);
-
+        $('#wx span.obs').html(condStr);
+        $('#wx span.temp').html(tempStr);
     });
-
 }
+
