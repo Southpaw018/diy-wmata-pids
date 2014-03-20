@@ -2,7 +2,7 @@ body {
     font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
     font-size: 62.5%;
     background: black;
-    color: white;
+    color: #f0f0f0;
     padding: 25px;
 }
 
@@ -121,22 +121,25 @@ td:last-child {
 }
 
 .gr {
-    color: #009D57;
+    color: #16aa50; /*Original: #009d57; Icon: #00b75d; Map: #16aa50*/
 }
 
 .rd {
-    color: #E94333;
+    color: #e41c38; /*Original: #e94333; Icon: #f84035; Map: #e41c38*/
 }
 
 .bl {
-    color: #0D7BBA;
+    color: #0977bc; /*Original: #0d7bba; Icon: #0088dd; Map: #0977bc*/
 }
 
 .or {
-    color: #F89038;
+    color: #f59322; /*Original: #f89038; Icon: #fca93b; Map: #f59322*/
 }
 
 .yl {
-    color: #FDE310;
+    color: #fdd305; /*Original: #fde310; Icon: #fff01d; Map: #fdd305*/
 }
 
+.sv {
+    color: #a4b3ab; /*Original: NA; Icon: NA; Map: #a4b3ab*/
+}
