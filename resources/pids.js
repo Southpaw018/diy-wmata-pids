@@ -88,7 +88,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
                   intervalIDIncidents = setInterval(doUpdateIncidents, 120*SECOND);
 
                   getwx();
-                  intervalIDWeather = setInterval(getwx, 30*MINUTE*SECOND);
+                  intervalIDWeather = setInterval(getwx, 5*MINUTE*SECOND);
 
 
               });

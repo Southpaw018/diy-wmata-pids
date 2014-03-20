@@ -13,4 +13,3 @@ function getwx() {
         $('#wx span.temp').html(tempStr);
     });
 }
-
