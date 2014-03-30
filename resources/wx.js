@@ -4,7 +4,7 @@ function getwx() {
     $.getJSON(url, function(wxData) {
         var tempK = wxData.main.temp;
         var tempF = (tempK - 273) * 1.8 + 32;
-        var tempStr = Math.round(tempF) + "&thinsp;&deg;F";
+        var tempStr = Math.round(tempF);
 
         var cond = wxData.weather[0].description;
         var condStr = cond.charAt(0).toUpperCase() + cond.slice(1);
