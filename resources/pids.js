@@ -85,7 +85,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 	});
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
 	var newsize, dh, oneRow, empx, estCrawlHeight, availableSpace, numTrains, error;
 
 	newsize = ((($(window).width() * 62.5) / $('#predictions').outerWidth()) * 0.95);

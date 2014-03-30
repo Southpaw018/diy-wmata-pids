@@ -1,145 +1,145 @@
 body {
-    font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
-    font-size: 62.5%;
-    background: black;
-    color: #f0f0f0;
-    padding: 25px;
+	font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+	font-size: 62.5%;
+	background: black;
+	color: #f0f0f0;
+	padding: 25px;
 }
 
 #header {
-    padding-bottom: 0.5em;
+	padding-bottom: 0.5em;
 }
 
 #stationname {
-    font-size: 5em;
+	font-size: 5em;
 }
 
 #wx {
-    float: right;
-    text-align: right;
-    font-size: 2.5em;
+	float: right;
+	text-align: right;
+	font-size: 2.5em;
 }
 
 table {
-    font-size: 6em;
+	font-size: 6em;
 }
 
 .dest {
-    font-size: 0.7em;
-    white-space: nowrap;
+	font-size: 0.7em;
+	white-space: nowrap;
 }
 
 td:not(:first-child) {
-    padding-left: 0.8em;
+	padding-left: 0.8em;
 }
 
 td:not(:last-child) {
-    padding-right: 0.8em;
+	padding-right: 0.8em;
 }
 
 td:last-child {
-    padding-right: 0.4em;
+	padding-right: 0.4em;
 }
 
 #incidentcontainer {
-    position: absolute;
-    bottom: 1em;
-    width: 100%;
+	position: absolute;
+	bottom: 1em;
+	width: 100%;
 }
 
 #lines {
-    float: left;
-    padding-top: 0.25em;
-    padding-right: 0.25em;
-    font-size: 4.5em;
+	float: left;
+	padding-top: 0.25em;
+	padding-right: 0.25em;
+	font-size: 4.5em;
 }
 
 #incidents {
-    display: block;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    line-height: 1;
-    position: relative;
-    overflow: hidden;
-    height: 6em;
+	display: block;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+	position: relative;
+	overflow: hidden;
+	height: 6em;
 }
 
 #incidents li {
-    position: absolute;
-    top: -999em;
-    left: 0;
-    display: block;
-    white-space: nowrap;
-    padding-top: 0.25em;
-    font-size: 4.5em;
+	position: absolute;
+	top: -999em;
+	left: 0;
+	display: block;
+	white-space: nowrap;
+	padding-top: 0.25em;
+	font-size: 4.5em;
 }
 
 #incidents li .lines {
-    display: none;
+	display: none;
 }
 
 .flash {
-    color: red;
-    -webkit-animation-duration: 2s;
-    -webkit-animation-name: fader;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-direction: alternate;
-    -moz-animation-duration: 2s;
-    -moz-animation-name: fader;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-direction: alternate;
+	color: red;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-name: fader;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	-moz-animation-duration: 2s;
+	-moz-animation-name: fader;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
 
 }
-  
-@-webkit-keyframes fader {
-    from {
-        opacity: 1.0;
-    }
-    
-    70% {
-        opacity: 1.0;
-    }
 
-    to {
-        opacity: 0.6;
-    }
+@-webkit-keyframes fader {
+	from {
+		opacity: 1.0;
+	}
+	
+	70% {
+		opacity: 1.0;
+	}
+
+	to {
+		opacity: 0.6;
+	}
 }
 
 @-moz-keyframes fader {
-    from {
-        opacity: 1.0;
-    }
-    
-    70% {
-        opacity: 1.0;
-    }
+	from {
+		opacity: 1.0;
+	}
+	
+	70% {
+		opacity: 1.0;
+	}
 
-    to {
-        opacity: 0.6;
-    }
+	to {
+		opacity: 0.6;
+	}
 }
 
 .gr {
-    color: #16aa50; /*Original: #009d57; Icon: #00b75d; Map: #16aa50*/
+	color: #16aa50; /*Original: #009d57; Icon: #00b75d; Map: #16aa50*/
 }
 
 .rd {
-    color: #e41c38; /*Original: #e94333; Icon: #f84035; Map: #e41c38*/
+	color: #e41c38; /*Original: #e94333; Icon: #f84035; Map: #e41c38*/
 }
 
 .bl {
-    color: #0977bc; /*Original: #0d7bba; Icon: #0088dd; Map: #0977bc*/
+	color: #0977bc; /*Original: #0d7bba; Icon: #0088dd; Map: #0977bc*/
 }
 
 .or {
-    color: #f59322; /*Original: #f89038; Icon: #fca93b; Map: #f59322*/
+	color: #f59322; /*Original: #f89038; Icon: #fca93b; Map: #f59322*/
 }
 
 .yl {
-    color: #fdd305; /*Original: #fde310; Icon: #fff01d; Map: #fdd305*/
+	color: #fdd305; /*Original: #fde310; Icon: #fff01d; Map: #fdd305*/
 }
 
 .sv {
-    color: #a4b3ab; /*Original: NA; Icon: NA; Map: #a4b3ab*/
+	color: #a4b3ab; /*Original: NA; Icon: NA; Map: #a4b3ab*/
 }
