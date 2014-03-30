@@ -1,6 +1,6 @@
 body {
 	font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
-	font-size: 62.5%;
+	font-size: 1vw;
 	background: black;
 	color: #f0f0f0;
 	padding: 25px;
@@ -19,43 +19,49 @@ body {
 #wx {
 	float: right;
 	text-align: right;
-	font-size: 2.5em;
+	font-size: 2.5vw;
 }
 
 table {
-	font-size: 6em;
+	width: 100%;
+	font-size: 6vw;
 }
 
+.lineHead	{width: 13.5%;}
+.carHead	{width: 18%;}
+.destHead	{width: auto;}
+.timeHead	{width: 15%;}
+
 .dest {
-	font-size: 0.7em;
+	font-size: 5vw;
 	white-space: nowrap;
 }
 
 td:not(:first-child) {
-	padding-left: 0.8em;
+	padding-left: 0.8vw;
 }
 
 td:not(:last-child) {
-	padding-right: 0.8em;
+	padding-right: 0.8vw;
 }
 
 td:last-child {
-	padding-right: 0.4em;
+	padding-right: 0.4vw;
 }
 
 #incidentcontainer {
 	position: absolute;
 	left: 0;
-	bottom: 1em;
+	bottom: 1vw;
 	width: 80%;
 	margin-right: 2%;
 }
 
 #lines {
 	float: left;
-	padding-top: 0.25em;
-	padding-right: 0.25em;
-	font-size: 4.5em;
+	padding-top: 0.25vw;
+	padding-right: 0.25vw;
+	font-size: 4.5vw;
 }
 
 #incidents {
@@ -66,7 +72,7 @@ td:last-child {
 	line-height: 1;
 	position: relative;
 	overflow: hidden;
-	height: 6em;
+	height: 6vw;
 }
 
 #incidents li {
@@ -75,8 +81,8 @@ td:last-child {
 	left: 0;
 	display: block;
 	white-space: nowrap;
-	padding-top: 0.25em;
-	font-size: 4.5em;
+	padding-top: 0.25vw;
+	font-size: 4.5vw;
 }
 
 #incidents li .lines {
@@ -86,9 +92,9 @@ td:last-child {
 #clock {
 	position: absolute;
 	right: 0;
-	bottom: 1em;
+	bottom: 1vw;
 	width: 18%;
-	font-size: 3.5em;
+	font-size: 3.5vw;
 }
 
 .flash {

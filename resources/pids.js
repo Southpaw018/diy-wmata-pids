@@ -96,10 +96,6 @@ $(document).ready(function() {
 	var newsize, dh, oneRow, empx, estCrawlHeight, availableSpace, numTrains, error;
 
 	newsize = ((($(window).width() * 62.5) / $('#predictions').outerWidth()) * 0.95);
-	$('body').css('font-size', newsize + '%');
-
-	dh = $($('#predictions thead tr').children()[2]);
-	dh.css('width', dh.innerWidth());
 
 	oneRow = $('#predictions tbody tr').outerHeight();
 	empx = (10 * newsize) / 62.5;
