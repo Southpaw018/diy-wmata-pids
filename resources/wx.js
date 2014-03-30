@@ -1,5 +1,5 @@
 function getwx() {
-    var url ="http://api.openweathermap.org/data/2.5/weather?id=4370890";
+    var url = "http://api.openweathermap.org/data/2.5/weather?id=4370890";
 
     $.getJSON(url, function(wxData) {
         var tempK = wxData.main.temp;
