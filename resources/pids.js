@@ -47,11 +47,15 @@ function updateIncidents(apikey) {
 	});
 }
 
+function updateClock() {
+	$('#clock').text(moment().format('h:mm A'));
+}
+
 function initializeDisplay(apikey, rtu, numtrains) {
 	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apikey;
 
 	$.getJSON(url, function(data) {
-		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents;
+		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock;
 		SECOND = 1000;
 		MINUTE = 60;
 
@@ -79,6 +83,9 @@ function initializeDisplay(apikey, rtu, numtrains) {
 		doUpdateIncidents = function(){updateIncidents(apikey);};
 		doUpdateIncidents();
 		intervalIDIncidents = setInterval(doUpdateIncidents, 120 * SECOND);
+
+		updateClock();
+		intervalUpdateClock = setInterval(updateClock, 60 * SECOND);
 
 		getwx();
 		intervalIDWeather = setInterval(getwx, 5 * MINUTE * SECOND);

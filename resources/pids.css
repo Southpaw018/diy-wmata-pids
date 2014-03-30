@@ -45,8 +45,10 @@ td:last-child {
 
 #incidentcontainer {
 	position: absolute;
+	left: 0;
 	bottom: 1em;
-	width: 100%;
+	width: 80%;
+	margin-right: 2%;
 }
 
 #lines {
@@ -79,6 +81,14 @@ td:last-child {
 
 #incidents li .lines {
 	display: none;
+}
+
+#clock {
+	position: absolute;
+	right: 0;
+	bottom: 1em;
+	width: 18%;
+	font-size: 3.5em;
 }
 
 .flash {
