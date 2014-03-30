@@ -5,7 +5,7 @@ body {
 	color: #f0f0f0;
 	padding: 25px;
 	overflow-x: hidden;
-
+	cursor: none;
 }
 
 #header {
