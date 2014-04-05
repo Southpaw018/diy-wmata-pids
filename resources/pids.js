@@ -2,7 +2,7 @@ function updatePredictions(apikey, rtu, numtrains) {
 	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apikey, function(data) {
 		$("#predictions tbody").children().remove();
 		$.each(data['Trains'].slice(0, numtrains), function(key, val) {
-			if (val['Line'] != "" && val['Car'] != "" && val['DestinationName'] != "" && val['Min'] != "") {
+			if (val['Line'] !== "" && val['Car'] !== "" && val['DestinationName'] !== "" && val['Min'] !== "") {
 				var lnclass, minclass;
 
 				if (val['Line'] != "--") {
@@ -62,7 +62,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 		rtus = [rtu];
 
 		$('#stationname').text(data['Name']);
-		if (data['StationTogether1'] != '') {
+		if (data['StationTogether1'] !== '') {
 			rtus.push(data['StationTogether1']);
 		}
 
