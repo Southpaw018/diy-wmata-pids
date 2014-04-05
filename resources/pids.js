@@ -1,26 +1,26 @@
 function updatePredictions(apikey, rtu, numtrains) {
 	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apikey, function(data) {
 		$("#predictions tbody").children().remove();
-		$.each(data['Trains'].slice(0, numtrains), function(key, val) {
-			if (val['Line'] !== "" && val['Car'] !== "" && val['DestinationName'] !== "" && val['Min'] !== "") {
+		$.each(data.Trains.slice(0, numtrains), function(key, val) {
+			if (val.Line !== "" && val.Car !== "" && val.DestinationName !== "" && val.Min !== "") {
 				var lnclass, minclass;
 
-				if (val['Line'] != "--") {
-					lnclass = " class=\"" + val['Line'].toLowerCase() + "\"";
+				if (val.Line != "--") {
+					lnclass = " class=\"" + val.Line.toLowerCase() + "\"";
 				} else {
 					lnclass = "";
 				}
 
-				if (val['Min'] == 'BRD' || val['Min'] == 'ARR') {
+				if (val.Min == 'BRD' || val.Min == 'ARR') {
 					minclass = " class=\"flash\"";
 				} else {
 					minclass = "";
 				}
 
-				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val['Line'] + "</td><td>" + val['Car'] +
-				"</td><td><span class='dest'>" + val['DestinationName'] +
+				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val.Line + "</td><td>" + val.Car +
+				"</td><td><span class='dest'>" + val.DestinationName +
 				"</span></td><td" + minclass + ">" +
-				val['Min'] + "</td></tr>");
+				val.Min + "</td></tr>");
 			}
 		});
 	});
@@ -31,16 +31,16 @@ function updateIncidents(apikey) {
 	$.getJSON(url, function(data) {
 		$("#incidents").marquee("pause");
 		$("#incidents").children().remove();
-		$.each(data['Incidents'], function(key, value) {
+		$.each(data.Incidents, function(key, value) {
 			var lines, linespans;
-			lines = value['LinesAffected'].split(';');
+			lines = value.LinesAffected.split(';');
 			linespans = [];
 			$.each(lines, function(key, value) {
 				if (value != ' ') {
 					linespans.push("<span class=\"" + value.toLowerCase() + "\">" + value + "</span>");
 				}
 			});
-			$("#incidents").append("<li><span class=\"lines\">" + linespans.join(',') + " Alert:</span>" + value['Description'] + "</li>");
+			$("#incidents").append("<li><span class=\"lines\">" + linespans.join(',') + " Alert:</span>" + value.Description + "</li>");
 		});
 		$("#incidents").marquee("update");
 		$("#incidents").marquee("resume");
@@ -61,9 +61,9 @@ function initializeDisplay(apikey, rtu, numtrains) {
 
 		rtus = [rtu];
 
-		$('#stationname').text(data['Name']);
-		if (data['StationTogether1'] !== '') {
-			rtus.push(data['StationTogether1']);
+		$('#stationname').text(data.Name);
+		if (data.StationTogether1 !== '') {
+			rtus.push(data.StationTogether1);
 		}
 
 		doUpdatePred = function(){updatePredictions(apikey, rtus.join(','), numtrains);};
