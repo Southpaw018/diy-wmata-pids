@@ -51,11 +51,28 @@ function updateClock() {
 	$('#clock').text(moment().format('h:mm A'));
 }
 
+function updateWeather() {
+    var url = "http://api.openweathermap.org/data/2.5/weather?id=4370890";
+
+    $.getJSON(url, function(wxData) {
+        var tempK = wxData.main.temp;
+        var tempF = (tempK - 273) * 1.8 + 32;
+        var tempStr = Math.round(tempF);
+
+        var cond = wxData.weather[0].description;
+        var condStr = cond.charAt(0).toUpperCase() + cond.slice(1);
+
+        $('#wx span.obs').html(condStr);
+        $('#wx span.temp').html(tempStr);
+    });
+}
+
+
 function initializeDisplay(apikey, rtu, numtrains) {
 	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apikey;
 
 	$.getJSON(url, function(data) {
-		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock;
+		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock, intervalIDWeather;
 		SECOND = 1000;
 		MINUTE = 60;
 
@@ -87,13 +104,13 @@ function initializeDisplay(apikey, rtu, numtrains) {
 		updateClock();
 		intervalUpdateClock = setInterval(updateClock, 60 * SECOND);
 
-		getwx();
-		intervalIDWeather = setInterval(getwx, 5 * MINUTE * SECOND);
+		updateWeather();
+		intervalIDWeather = setInterval(updateWeather, 5 * MINUTE * SECOND);
 	});
 }
 
 $(document).ready(function() {
-	var newsize, dh, oneRow, empx, estCrawlHeight, availableSpace, numTrains, error;
+	var newsize, oneRow, empx, estCrawlHeight, availableSpace, numTrains, error;
 
 	newsize = ((($(window).width() * 62.5) / $('#predictions').outerWidth()) * 0.95);
 
