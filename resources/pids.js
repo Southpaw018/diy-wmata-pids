@@ -17,10 +17,7 @@ function updatePredictions(apikey, rtu, numtrains) {
 					minclass = "";
 				}
 
-				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val.Line + "</td><td>" + val.Car +
-				"</td><td><span class='dest'>" + val.DestinationName +
-				"</span></td><td" + minclass + ">" +
-				val.Min + "</td></tr>");
+				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val.Line + "</td><td>" + val.Car + "</td><td><span class='dest'>" + val.DestinationName + "</span></td><td" + minclass + ">" + val.Min + "</td></tr>");
 			}
 		});
 	});
@@ -31,17 +28,19 @@ function updateIncidents(apikey) {
 	$.getJSON(url, function(data) {
 		$("#incidents").marquee("pause");
 		$("#incidents").children().remove();
-		$.each(data.Incidents, function(key, value) {
-			var lines, linespans;
-			lines = value.LinesAffected.split(';');
-			linespans = [];
-			$.each(lines, function(key, value) {
-				if (value != ' ') {
-					linespans.push("<span class=\"" + value.toLowerCase() + "\">" + value + "</span>");
-				}
+		if (data.Incidents.length < 1) {
+			$.each(data.Incidents, function(key, value) {
+				var lines, linespans;
+				lines = value.LinesAffected.split(';');
+				linespans = [];
+				$.each(lines, function(key, value) {
+					if (value != ' ') {
+						linespans.push("<span class=\"" + value.toLowerCase() + "\">&bull;</span>");
+					}
+				});
+				$("#incidents").append("<li><span class=\"lines\">" + linespans.join('') + "&nbsp;&nbsp;</span>" + value.Description + "</li>");
 			});
-			$("#incidents").append("<li><span class=\"lines\">" + linespans.join(',') + " Alert:</span>" + value.Description + "</li>");
-		});
+		}
 		$("#incidents").marquee("update");
 		$("#incidents").marquee("resume");
 	});
