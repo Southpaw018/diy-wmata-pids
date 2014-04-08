@@ -34,11 +34,11 @@ function updateIncidents(apikey) {
 				lines = value.LinesAffected.split(';');
 				linespans = [];
 				$.each(lines, function(key, value) {
-					if (value != ' ') {
+					if (value !== '') {
 						linespans.push("<span class=\"" + value.toLowerCase() + "\">&bull;</span>");
 					}
 				});
-				$("#incidents").append("<li><span class=\"lines\">" + linespans.join('') + "&nbsp;&nbsp;</span>" + value.Description + "</li>");
+				$("#incidents").append("<li><span class=\"lines\">" + linespans.join('') + "</span>" + value.Description + "</li>");
 			});
 		}
 		$("#incidents").marquee("update");
@@ -64,9 +64,7 @@ function updateWeather() {
 		$('#wx span.obs').html(condStr);
 		$('#wx span.temp').html(tempStr);
 	});
-
 }
-
 
 function initializeDisplay(apikey, rtu, numtrains) {
 	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apikey;
