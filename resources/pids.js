@@ -28,7 +28,7 @@ function updateIncidents(apikey) {
 	$.getJSON(url, function(data) {
 		$("#incidents").marquee("pause");
 		$("#incidents").children().remove();
-		if (data.Incidents.length < 1) {
+		if (data.Incidents.length > 1) {
 			$.each(data.Incidents, function(key, value) {
 				var lines, linespans;
 				lines = value.LinesAffected.split(';');
