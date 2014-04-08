@@ -8,6 +8,11 @@ body {
 	cursor: none;
 }
 
+#clear {
+	clear: both;
+	height: 1px;
+}
+
 #header {
 	padding-bottom: 0.5em;
 }
