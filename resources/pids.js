@@ -47,7 +47,30 @@ function updateIncidents(apikey) {
 }
 
 function updateClock() {
-	$('#clock').text(moment().format('h:mm A'));
+	var curTime = moment();
+	$('#clock').text(curTime.format('h:mm A'));
+
+	if (curTime.hour() < 9) {
+		updateBikeIndicator();
+	} else {
+		$('#bikeindicator').removeClass();
+	}
+}
+
+function updateBikeIndicator() {
+	var bikeOK = true;
+	var url = "http://api.openweathermap.org/data/2.5/forecast?id=4370890";
+
+	$.getJSON(url, function(forecastData) {
+		$(forecastData.list).each(function() {
+			var forecastTime = moment(this.dt * 1000);
+			if (forecastTime.isSame(moment(), 'day')) {
+				if ([5,8,11,14,17].indexOf(forecastTime.hour())) {
+					//calculate bike status here
+				}
+			}
+		});
+	});
 }
 
 function updateWeather() {
