@@ -51,27 +51,40 @@ function updateClock() {
 	var curTime = moment();
 	$('#clock').text(curTime.format('h:mm A'));
 
-	if (curTime.hour() < 9) {
+	if (sessionStorage.getItem('bikeIndicatorUpdated') != moment().format('l')) {
 		updateBikeIndicator();
 	} else {
-		$('#bikeindicator').removeClass();
+		$('#bikeindicator').toggleClass(sessionStorage.getItem('bikeOK'), true);
 	}
 }
 
 function updateBikeIndicator() {
 	var bikeOK = true;
+	var $bikeindicator = $('#bikeindicator');
 	var url = "http://api.openweathermap.org/data/2.5/forecast?id=4370890";
+
+	$bikeindicator.removeClass();
 
 	$.getJSON(url, function(forecastData) {
 		$(forecastData.list).each(function() {
 			var forecastTime = moment(this.dt * 1000);
 			if (forecastTime.isSame(moment(), 'day')) {
-				if ([5,8,11,14,17].indexOf(forecastTime.hour())) {
-					//calculate bike status here
+				if (forecastTime.hour() >= 8 && forecastTime.hour() <= 17) {
+					if (Math.round(((this.main.temp - 273.15) * 1.8) + 32) < 50) {
+						bikeOK = false;
+					}
+					if (typeof(this.rain) !== undefined) {
+						if (this.rain['3h'] > 0) {
+							bikeOK = false;
+						}
+					}
 				}
 			}
 		});
 	});
+	sessionStorage.setItem('bikeIndicatorUpdated', moment().format('l'));
+	sessionStorage.setItem('bikeOK', bikeOK);
+	$bikeindicator.addClass(bikeOK.toString());
 }
 
 function updateWeather() {

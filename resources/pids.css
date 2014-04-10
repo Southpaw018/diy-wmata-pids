@@ -30,8 +30,15 @@ body {
 
 #bikeindicator {
 	float: right;
-	background-color: #666;
+	background-color: #999999;
 	margin-right: 14vw;
+}
+
+#bikeindicator.true {
+	background-color: #009900;
+}
+#bikeindicator.false {
+	background-color: #990000;
 }
 
 #bikeindicator img {
