@@ -25,10 +25,12 @@ function updatePredictions(apikey, rtu, numtrains) {
 
 function updateIncidents(apikey) {
 	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apikey;
+	var $incidents = $('#incidents');
+
 	$.getJSON(url, function(data) {
-		$("#incidents").marquee("pause");
+		$incidents.marquee("pause");
 		$("#lines").children().remove();
-		$("#incidents").children().remove();
+		$incidents.children().remove();
 		if (data.Incidents.length > 0) {
 			$.each(data.Incidents, function(key, value) {
 				var lines, linespans;
@@ -39,11 +41,11 @@ function updateIncidents(apikey) {
 						linespans.push("<span class=\"" + value.toLowerCase() + "\">&bull;</span>");
 					}
 				});
-				$("#incidents").append("<li><span class=\"lines\">" + linespans.join('') + "</span>" + value.Description + "</li>");
+				$incidents.append("<li><span class=\"lines\">" + linespans.join('') + "</span>" + value.Description + "</li>");
 			});
 		}
-		$("#incidents").marquee("update");
-		$("#incidents").marquee("resume");
+		$incidents.marquee("update");
+		$incidents.marquee("resume");
 	});
 }
 
