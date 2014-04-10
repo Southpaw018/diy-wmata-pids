@@ -53,7 +53,7 @@ function updateClock() {
 	var curTime = moment();
 	$('#clock').text(curTime.format('h:mm A'));
 
-	if (sessionStorage.getItem('bikeIndicatorUpdated') != moment().format('l')) {
+	if (sessionStorage.getItem('bikeIndicatorUpdated') != curTime.format('l')) {
 		updateBikeIndicator();
 	} else {
 		$('#bikeindicator').toggleClass(sessionStorage.getItem('bikeOK'), true);
@@ -63,6 +63,7 @@ function updateClock() {
 function updateBikeIndicator() {
 	var bikeOK = true;
 	var $bikeindicator = $('#bikeindicator');
+	var curTime = moment();
 	var url = "http://api.openweathermap.org/data/2.5/forecast?id=4370890";
 
 	$bikeindicator.removeClass();
@@ -70,7 +71,7 @@ function updateBikeIndicator() {
 	$.getJSON(url, function(forecastData) {
 		$(forecastData.list).each(function() {
 			var forecastTime = moment(this.dt * 1000);
-			if (forecastTime.isSame(moment(), 'day')) {
+			if (forecastTime.isSame(curTime, 'day')) {
 				if (forecastTime.hour() >= 8 && forecastTime.hour() <= 17) {
 					if (Math.round(((this.main.temp - 273.15) * 1.8) + 32) < 50) {
 						bikeOK = false;
@@ -84,7 +85,7 @@ function updateBikeIndicator() {
 			}
 		});
 	});
-	sessionStorage.setItem('bikeIndicatorUpdated', moment().format('l'));
+	sessionStorage.setItem('bikeIndicatorUpdated', curTime.format('l'));
 	sessionStorage.setItem('bikeOK', bikeOK);
 	$bikeindicator.addClass(bikeOK.toString());
 }
