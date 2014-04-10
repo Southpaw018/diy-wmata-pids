@@ -27,8 +27,9 @@ function updateIncidents(apikey) {
 	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apikey;
 	$.getJSON(url, function(data) {
 		$("#incidents").marquee("pause");
+		$("#lines").children().remove();
 		$("#incidents").children().remove();
-		if (data.Incidents.length > 1) {
+		if (data.Incidents.length > 0) {
 			$.each(data.Incidents, function(key, value) {
 				var lines, linespans;
 				lines = value.LinesAffected.split(';');
