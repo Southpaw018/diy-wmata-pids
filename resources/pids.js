@@ -3,7 +3,8 @@ var marqueeInitialized = false;
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	var url = "http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey;
 
-	$.getJSON(url, function(data) {
+	$.getJSON(url)
+	  .done(function(data) {
 		$("#predictions tbody").children().remove();
 		$.each(data.Trains.slice(0, maxDisplayedTrains), function(key, val) {
 			if (val.Line !== "" && val.Car !== "" && val.DestinationName !== "" && val.Min !== "") {
@@ -24,8 +25,13 @@ function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val.Line + "</td><td>" + val.Car + "</td><td><span class='dest'>" + val.DestinationName + "</span></td><td" + minclass + ">" + val.Min + "</td></tr>");
 			}
 		});
+	  })
+	  .fail(function(jqxhr, textStatus, error) {
+		var err = textStatus + ", " + error;
+		console.log("Request Failed: " + err);
 	});
 }
+
 
 function initMarquee () {
 	$("#incidents").marquee({yScroll: "bottom", pauseSpeed: 1500, scrollSpeed: 10, pauseOnHover: false,
@@ -48,7 +54,8 @@ function updateIncidents(apiKey) {
 		marqueeInitialized = true;
 	}
 
-	$.getJSON(url, function(data) {
+	$.getJSON(url)
+	  .done(function(data) {
 		$incidents.marquee("pause");
 		$("#lines").children().remove();
 		$incidents.children().remove();
@@ -67,8 +74,13 @@ function updateIncidents(apiKey) {
 		}
 		$incidents.marquee("update");
 		$incidents.marquee("resume");
+	  })
+	  .fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "Request Failed: " + err );
 	});
 }
+
 
 function updateBikeIndicator() {
 	var bikeOK = true;
@@ -78,7 +90,8 @@ function updateBikeIndicator() {
 
 	$bikeindicator.removeClass();
 
-	$.getJSON(url, function(forecastData) {
+	$.getJSON(url)
+	  .done(function(forecastData) {
 		$(forecastData.list).each(function() {
 			var forecastTime = moment(this.dt * 1000);
 			if (forecastTime.isSame(curTime, 'day')) {
@@ -94,6 +107,10 @@ function updateBikeIndicator() {
 				}
 			}
 		});
+	  })
+  	.fail(function(jqxhr, textStatus, error) {
+		var err = textStatus + ", " + error;
+		console.log("Request Failed: " + err);
 	});
 	sessionStorage.setItem('bikeIndicatorUpdated', curTime.format('l'));
 	sessionStorage.setItem('bikeOK', bikeOK);
@@ -131,7 +148,8 @@ function updateWeather() {
 function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apiKey;
 
-	$.getJSON(url, function(data) {
+	$.getJSON(url)
+	  .done(function(data) {
 		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock, intervalIDWeather;
 		SECOND = 1000;
 		MINUTE = 60;
@@ -156,6 +174,10 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 
 		updateWeather();
 		intervalIDWeather = setInterval(updateWeather, 5 * MINUTE * SECOND);
+	  })
+	  .fail(function(jqxhr, textStatus, error) {
+		var err = textStatus + ", " + error;
+		console.log("Request Failed: " + err);
 	});
 }
 
