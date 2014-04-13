@@ -1,7 +1,9 @@
 var marqueeInitialized = false;
 
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
-	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey, function(data) {
+	var url = "http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey;
+
+	$.getJSON(url, function(data) {
 		$("#predictions tbody").children().remove();
 		$.each(data.Trains.slice(0, maxDisplayedTrains), function(key, val) {
 			if (val.Line !== "" && val.Car !== "" && val.DestinationName !== "" && val.Min !== "") {
@@ -100,6 +102,7 @@ function updateBikeIndicator() {
 
 function updateClock() {
 	var curTime = moment();
+
 	$('#clock').text(curTime.format('h:mm A'));
 
 	if (sessionStorage.getItem('bikeIndicatorUpdated') != curTime.format('l')) {
