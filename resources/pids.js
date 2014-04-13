@@ -1,7 +1,7 @@
-function updatePredictions(apikey, rtu, numtrains) {
-	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apikey, function(data) {
+function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
+	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey, function(data) {
 		$("#predictions tbody").children().remove();
-		$.each(data.Trains.slice(0, numtrains), function(key, val) {
+		$.each(data.Trains.slice(0, maxDisplayedTrains), function(key, val) {
 			if (val.Line !== "" && val.Car !== "" && val.DestinationName !== "" && val.Min !== "") {
 				var lnclass, minclass;
 
@@ -23,8 +23,8 @@ function updatePredictions(apikey, rtu, numtrains) {
 	});
 }
 
-function updateIncidents(apikey) {
-	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apikey;
+function updateIncidents(apiKey) {
+	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apiKey;
 	var $incidents = $('#incidents');
 
 	$.getJSON(url, function(data) {
@@ -106,8 +106,8 @@ function updateWeather() {
 	});
 }
 
-function initializeDisplay(apikey, rtu, numtrains) {
-	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apikey;
+function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
+	var url = "http://api.wmata.com/Rail.svc/json/JStationInfo?StationCode=" + rtu + "&callback=?&api_key=" + apiKey;
 
 	$.getJSON(url, function(data) {
 		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock, intervalIDWeather;
@@ -121,7 +121,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 			rtus.push(data.StationTogether1);
 		}
 
-		doUpdatePred = function(){updatePredictions(apikey, rtus.join(','), numtrains);};
+		doUpdatePred = function(){updatePredictions(apiKey, rtus.join(','), maxDisplayedTrains);};
 		doUpdatePred();
 		intervalIDPred = setInterval(doUpdatePred, 20 * SECOND);
 
@@ -135,7 +135,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 			}
 		});
 
-		doUpdateIncidents = function(){updateIncidents(apikey);};
+		doUpdateIncidents = function(){updateIncidents(apiKey);};
 		doUpdateIncidents();
 		intervalIDIncidents = setInterval(doUpdateIncidents, 120 * SECOND);
 
@@ -148,7 +148,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 }
 
 $(document).ready(function() {
-	var newsize, oneRow, empx, estCrawlHeight, availableSpace, numTrains, error;
+	var newsize, oneRow, empx, estCrawlHeight, availableSpace, maxDisplayedTrains, error;
 
 	newsize = ((($(window).width() * 62.5) / $('#predictions').outerWidth()) * 0.95);
 
@@ -157,11 +157,11 @@ $(document).ready(function() {
 	estCrawlHeight = 6 * empx;
 	availableSpace = ($(window).height() - $('#stationname').outerHeight() - $('#predictions').outerHeight() + oneRow - estCrawlHeight);
 
-	numTrains = Math.floor(availableSpace/oneRow);
+	maxDisplayedTrains = Math.floor(availableSpace/oneRow);
 
 	error = false;
 
-	if (typeof apikey === 'undefined') {
+	if (typeof apiKey === 'undefined') {
 		$('#predictions tbody').append('<tr class="flash"><td colspan="4">Error: API key not defined.</td></tr>');
 		error = true;
 	}
@@ -172,6 +172,6 @@ $(document).ready(function() {
 	}
 
 	if (!error) {
-		initializeDisplay(apikey, rtu, numTrains);
+		initializeDisplay(apiKey, rtu, maxDisplayedTrains);
 	}
 });
