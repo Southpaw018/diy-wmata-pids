@@ -1,3 +1,5 @@
+var marqueeInitialized = false;
+
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	$.getJSON("http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey, function(data) {
 		$("#predictions tbody").children().remove();
@@ -23,9 +25,26 @@ function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	});
 }
 
+function initMarquee () {
+	$("#incidents").marquee({yScroll: "bottom", pauseSpeed: 1500, scrollSpeed: 10, pauseOnHover: false,
+		beforeshow: function ($marquee, $li) {
+			var lines = $li.find(".lines");
+			$("#lines").html(lines.html()).fadeIn(1000);
+		},
+		aftershow: function () {
+			$("#lines").hide();
+		}
+	});
+}
+
 function updateIncidents(apiKey) {
 	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apiKey;
 	var $incidents = $('#incidents');
+
+	if (!marqueeInitialized) {
+		initMarquee();
+		marqueeInitialized = true;
+	}
 
 	$.getJSON(url, function(data) {
 		$incidents.marquee("pause");
@@ -124,16 +143,6 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 		doUpdatePred = function(){updatePredictions(apiKey, rtus.join(','), maxDisplayedTrains);};
 		doUpdatePred();
 		intervalIDPred = setInterval(doUpdatePred, 20 * SECOND);
-
-		$("#incidents").marquee({yScroll: "bottom", pauseSpeed: 1500, scrollSpeed: 10, pauseOnHover: false,
-			beforeshow: function ($marquee, $li) {
-				var lines = $li.find(".lines");
-				$("#lines").html(lines.html()).fadeIn(1000);
-			},
-			aftershow: function () {
-				$("#lines").hide();
-			}
-		});
 
 		doUpdateIncidents = function(){updateIncidents(apiKey);};
 		doUpdateIncidents();
