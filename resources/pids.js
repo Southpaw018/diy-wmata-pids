@@ -49,17 +49,6 @@ function updateIncidents(apikey) {
 	});
 }
 
-function updateClock() {
-	var curTime = moment();
-	$('#clock').text(curTime.format('h:mm A'));
-
-	if (sessionStorage.getItem('bikeIndicatorUpdated') != curTime.format('l')) {
-		updateBikeIndicator();
-	} else {
-		$('#bikeindicator').toggleClass(sessionStorage.getItem('bikeOK'), true);
-	}
-}
-
 function updateBikeIndicator() {
 	var bikeOK = true;
 	var $bikeindicator = $('#bikeindicator');
@@ -88,6 +77,17 @@ function updateBikeIndicator() {
 	sessionStorage.setItem('bikeIndicatorUpdated', curTime.format('l'));
 	sessionStorage.setItem('bikeOK', bikeOK);
 	$bikeindicator.addClass(bikeOK.toString());
+}
+
+function updateClock() {
+	var curTime = moment();
+	$('#clock').text(curTime.format('h:mm A'));
+
+	if (sessionStorage.getItem('bikeIndicatorUpdated') != curTime.format('l')) {
+		updateBikeIndicator();
+	} else {
+		$('#bikeindicator').toggleClass(sessionStorage.getItem('bikeOK'), true);
+	}
 }
 
 function updateWeather() {
@@ -130,7 +130,7 @@ function initializeDisplay(apikey, rtu, numtrains) {
 				var lines = $li.find(".lines");
 				$("#lines").html(lines.html()).fadeIn(1000);
 			},
-			aftershow: function ($marquee, $li) {
+			aftershow: function () {
 				$("#lines").hide();
 			}
 		});
