@@ -27,8 +27,7 @@ function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 		});
 	  })
 	  .fail(function(jqxhr, textStatus, error) {
-		var err = textStatus + ", " + error;
-		console.log("Request Failed: " + err);
+		console.log("Request Failed: " + textStatus + ", " + error);
 	});
 }
 
@@ -76,8 +75,7 @@ function updateIncidents(apiKey) {
 		$incidents.marquee("resume");
 	  })
 	  .fail(function( jqxhr, textStatus, error ) {
-		var err = textStatus + ", " + error;
-		console.log( "Request Failed: " + err );
+		console.log("Request Failed: " + textStatus + ", " + error);
 	});
 }
 
@@ -108,9 +106,8 @@ function updateBikeIndicator() {
 			}
 		});
 	  })
-  	.fail(function(jqxhr, textStatus, error) {
-		var err = textStatus + ", " + error;
-		console.log("Request Failed: " + err);
+	  .fail(function(jqxhr, textStatus, error) {
+		console.log("Request Failed: " + textStatus + ", " + error);
 	});
 	sessionStorage.setItem('bikeIndicatorUpdated', curTime.format('l'));
 	sessionStorage.setItem('bikeOK', bikeOK);
@@ -176,8 +173,7 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 		intervalIDWeather = setInterval(updateWeather, 5 * MINUTE * SECOND);
 	  })
 	  .fail(function(jqxhr, textStatus, error) {
-		var err = textStatus + ", " + error;
-		console.log("Request Failed: " + err);
+		console.log("Request Failed: " + textStatus + ", " + error);
 	});
 }
 
