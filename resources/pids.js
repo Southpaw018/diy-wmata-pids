@@ -50,11 +50,6 @@ function updateIncidents(apiKey) {
 	var url = "http://api.wmata.com/Incidents.svc/json/Incidents" + "?callback=?&api_key=" + apiKey;
 	var $incidents = $('#incidents');
 
-	if (!marqueeInitialized) {
-		initMarquee();
-		marqueeInitialized = true;
-	}
-
 	$.getJSON(url)
 	  .done(function(data) {
 		$incidents.marquee("pause");
@@ -79,6 +74,11 @@ function updateIncidents(apiKey) {
 	  .fail(function( jqxhr, textStatus, error ) {
 		console.log("Request Failed: " + textStatus + ", " + error);
 	});
+
+	if (!marqueeInitialized) {
+		setTimeout(initMarquee, 5000);
+		marqueeInitialized = true;
+	}
 }
 
 
@@ -165,7 +165,7 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 		intervalWeather = setInterval(updateWeather, 300 * SECOND);
 
 		updatePredictions(apiKey, rtus, maxDisplayedTrains);
-		setTimeout(updateIncidents, 5 * SECOND, apiKey);
+		updateIncidents(apiKey);
 		updateClock();
 		updateWeather();
 	  })
