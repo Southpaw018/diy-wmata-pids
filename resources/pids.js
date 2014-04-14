@@ -7,24 +7,18 @@ function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 
 	$.getJSON(url)
 	  .done(function(data) {
-		$("#predictions tbody").children().remove();
-		$.each(data.Trains.slice(0, maxDisplayedTrains), function(key, val) {
-			if (val.Line !== "" && val.Car !== "" && val.DestinationName !== "" && val.Min !== "") {
-				var lnclass, minclass;
+		var $tbody = $("#predictions tbody");
+		$tbody.children().remove();
+		$.each(data.Trains.slice(0, maxDisplayedTrains), function(key, train) {
+			if (train.Line !== "" && train.Car !== "" && train.DestinationName !== "" && train.Min !== "") {
+				var minclass = isNaN(train.Min) ? "flash" : "";
 
-				if (val.Line != "--") {
-					lnclass = " class=\"" + val.Line.toLowerCase() + "\"";
-				} else {
-					lnclass = "";
-				}
-
-				if (val.Min == 'BRD' || val.Min == 'ARR') {
-					minclass = " class=\"flash\"";
-				} else {
-					minclass = "";
-				}
-
-				$("#predictions tbody").append("<tr><td" + lnclass + ">" + val.Line + "</td><td>" + val.Car + "</td><td><span class='dest'>" + val.DestinationName + "</span></td><td" + minclass + ">" + val.Min + "</td></tr>");
+				var $newTrain = $(document.createElement('tr'));
+				$newTrain.append($(document.createElement('td')).addClass(train.Line.toLowerCase()).text(train.Line));
+				$newTrain.append($(document.createElement('td')).text(train.Car));
+				$newTrain.append($(document.createElement('td')).addClass("dest").text(train.DestinationName));
+				$newTrain.append($(document.createElement('td')).addClass(minclass).text(train.Min));
+				$tbody.append($newTrain);
 			}
 		});
 	  })
