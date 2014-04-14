@@ -1,4 +1,6 @@
 var marqueeInitialized = false;
+var maxDisplayedTrains;
+var intervalPredictions, intervalIncidents, intervalClock, intervalWeather;
 
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	var url = "http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey;
@@ -147,30 +149,25 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 
 	$.getJSON(url)
 	  .done(function(data) {
-		var rtus, SECOND, MINUTE, doUpdatePred, doUpdateIncidents, intervalIDPred, intervalIDIncidents, intervalUpdateClock, intervalIDWeather;
-		SECOND = 1000;
-		MINUTE = 60;
+		var rtus;
+		var SECOND = 1000;
 
 		rtus = [rtu];
-
 		$('#stationname').text(data.Name);
 		if (data.StationTogether1 !== '') {
 			rtus.push(data.StationTogether1);
 		}
+		rtus = rtus.join('.');
 
-		doUpdatePred = function(){updatePredictions(apiKey, rtus.join(','), maxDisplayedTrains);};
-		doUpdatePred();
-		intervalIDPred = setInterval(doUpdatePred, 20 * SECOND);
+		intervalPredictions = setInterval(updatePredictions, 20 * SECOND, apiKey, rtus, maxDisplayedTrains);
+		intervalIncidents = setInterval(updateIncidents, 120 * SECOND, apiKey);
+		intervalClock = setInterval(updateClock, 60 * SECOND);
+		intervalWeather = setInterval(updateWeather, 300 * SECOND);
 
-		doUpdateIncidents = function(){updateIncidents(apiKey);};
-		doUpdateIncidents();
-		intervalIDIncidents = setInterval(doUpdateIncidents, 120 * SECOND);
-
+		updatePredictions(apiKey, rtus, maxDisplayedTrains);
+		setTimeout(updateIncidents, 5 * SECOND, apiKey);
 		updateClock();
-		intervalUpdateClock = setInterval(updateClock, 60 * SECOND);
-
 		updateWeather();
-		intervalIDWeather = setInterval(updateWeather, 5 * MINUTE * SECOND);
 	  })
 	  .fail(function(jqxhr, textStatus, error) {
 		console.log("Request Failed: " + textStatus + ", " + error);
@@ -178,7 +175,7 @@ function initializeDisplay(apiKey, rtu, maxDisplayedTrains) {
 }
 
 $(document).ready(function() {
-	var newsize, oneRow, empx, estCrawlHeight, availableSpace, maxDisplayedTrains, error;
+	var newsize, oneRow, empx, estCrawlHeight, availableSpace, error;
 
 	newsize = ((($(window).width() * 62.5) / $('#predictions').outerWidth()) * 0.95);
 
