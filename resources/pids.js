@@ -1,6 +1,7 @@
 var marqueeInitialized = false;
 var maxDisplayedTrains;
 var intervalPredictions, intervalIncidents, intervalClock, intervalWeather;
+var bikeOK = false;
 
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	var url = "http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey;
@@ -77,7 +78,6 @@ function updateIncidents(apiKey) {
 
 
 function updateBikeIndicator() {
-	var bikeOK = true;
 	var $bikeindicator = $('#bikeindicator');
 	var curTime = moment();
 	var url = "http://api.openweathermap.org/data/2.5/forecast?id=4370890";
@@ -99,6 +99,9 @@ function updateBikeIndicator() {
 						}
 					}
 				}
+			}
+			if (bikeOK === false) {
+				return false;
 			}
 		});
 	  })
