@@ -1,7 +1,7 @@
 var marqueeInitialized = false;
 var maxDisplayedTrains;
 var intervalPredictions, intervalIncidents, intervalClock, intervalWeather;
-var bikeOK = false;
+var bikeOK = true;
 
 function updatePredictions(apiKey, rtu, maxDisplayedTrains) {
 	var url = "http://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + rtu + "?callback=?&api_key=" + apiKey;
@@ -107,6 +107,7 @@ function updateBikeIndicator() {
 	  })
 	  .fail(function(jqxhr, textStatus, error) {
 		console.log("Request Failed: " + textStatus + ", " + error);
+		bikeOK = null;
 	});
 	sessionStorage.setItem('bikeIndicatorUpdated', curTime.format('l'));
 	sessionStorage.setItem('bikeOK', bikeOK);
